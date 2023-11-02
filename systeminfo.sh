@@ -11,25 +11,48 @@
 # Add text to the output clearly indicating which component (such as CPU, RAM, etc.) the script is returning information about.
 # Runs as Root; you may execute the shell script with sudo or as Root.
 
-# Firstly, we need to use lshw for the specified system information for each thing.
+# Declaration of variables
+lshw_out=$(lshw)
 
-if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root. Please use 'sudo' or run as the root user."
-  exit 1
+# Declaration of functions
+display_info() {
+    component="$1"
+    echo "Computer Name: $lshw_out" | head -n 1
+    echo "=================================================="
+    echo "~~~~~~~~~~~~~ $component Information ~~~~~~~~~~~~~"
+    if [ "$component" == "CPU" ]; then
+        echo "$lshw_out" | grep -A 5 "$component" | grep -E "product:|vendor:|physical id:|bus info:|width:"
+    elif [ "$component" == "System Memory" ]; then
+        echo "$lshw_out" | grep -A 3 "$component" | grep -E "description:|physical id:|size:"
+    elif [ "$component" == "display" ]; then
+        echo "$lshw_out" | grep -A 12 "$component" | grep -E "description:|product:|vendor:|physical id:|bus info:|width:|clock:|capabilities:|configuration:|resources:"
+    elif [ "$component" == "network" ]; then
+        echo "$lshw_out" | grep -A 17 "$component" | grep -E "description:|product:|vendor:|physical id:|bus info:|logical name:|version:|serial:|size:|capacity:|width:|clock:|capabilities:|configuration:|resources:"
+    else 
+        echo ""
+    fi
+}
+# Main
+# Checks if script is running in root
+if [ "$EUID" -ne 1 ]; then
+    echo "you may continue"
+    sleep 2
+else
+    echo "Please run this script as root using sudo."
+    exit 1
 fi
-# Display information about the computer
-echo "=== Computer Information ==="
-lshw -short -C system #| grep -E "product:|vendor:|physical id:|bus info:|width:"
-# the -short is for output comands and the -C is for class
-# Display information about the CPU
-echo "=== CPU Information ==="
-lshw -short -C cpu #| grep -E "product:|vendor:|physical id:|bus info:|width:"
-# Display information about RAM
-echo "=== RAM Information ==="
-lshw -short -C memory #| grep -E "description:|physical id:|size:"
-# Display information about the Display adapter
-echo "=== Display Adapter Information ==="
-lshw -short -C display #| grep -E "description:|product:|vendor:|physical id:|bus info:|width:|clock:|capabilities:|configuration:|resources:"
-# Display information about Network adapters
-echo "=== Network Adapter Information ==="
-lshw -short -C network #| grep -E "description:|product:|vendor:|physical id:|bus info:|logical name:|version:|serial:|size:|capacity:|width:|clock:|capabilities:|configuration:|resources:"
+
+# Display information for each of these components
+display_info "CPU"
+sleep 3
+display_info "System Memory"
+sleep 3
+display_info "display"
+sleep 3
+display_info "network"
+
+# This is my second attempt I was told to resubmit I had to try to approach this in a different manner I hope this is okay!
+# Please let me know if I need to futher edit this I do not mind at all!
+# I also had to use more chat GPT and google sadly because I was still confused with some parts.
+
+exit 0
