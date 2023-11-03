@@ -10,6 +10,7 @@
 
 # Creates four directories: dir1, dir2, dir3, dir4
 
+mkdir dir1 dir2 dir3 dir4
 
 # Declaration of variables and array
 
