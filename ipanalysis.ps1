@@ -10,3 +10,7 @@ $ipv4Address = Get-Content network_report.txt | Select-String -Pattern 'IPv4 Add
 
 # Display the IPv4 address
 Write-Host "IPv4 Address: $ipv4Address"
+
+
+# Remove network_report.txt file
+Remove-Item C:\Users\VM-JMC\Desktop\network_report.txt
