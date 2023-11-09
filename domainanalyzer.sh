@@ -11,7 +11,7 @@
 echo "Enter a domain name"
 read domain
 
-ProvidesDomaininformation (){
+ProvidesDomaininformation(){
     # Display whois information about the domain
     echo "WHOIS information:" >> test.txt
     whois $domain >> test.txt
