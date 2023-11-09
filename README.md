@@ -10,3 +10,5 @@ I am learning these skills to increase my overall efficiency when completing cyb
 My favorite Ops 201 Challenge was from [Lesson 13](https://github.com/Matt01965/ops201-challenges/blob/main/domainanalyzer.sh). It is a simple bash script using <nslookup>. However, it was the first bash script I wrote that came 'naturally', without having to work out multiple errors or reference a syntax guide every line. 
 
 Shell scripting can help immensely to automate routine cybersecurity functions and search large datasets. 
+
+Shell scripting is a beast in itself to complete and I think it is going to take time to become a master! The next thing I am going to be working on is how fully automate my computers day to day tasks!
